@@ -1,0 +1,51 @@
+{
+    "layer": "top",
+    "position": "top",
+    "height": 21,
+    "spacing": 0,
+    "margin-top": 0,
+    "margin-bottom": 0,
+    "margin-left": 0,
+    "margin-right": 0,
+    "modules-left": ["hyprland/workspaces","bluetooth"],
+    "modules-center": [],
+    "modules-right": ["clock","custom/cpu","custom/gpu","custom/ram"],
+    "hyprland/workspaces": {
+        "format": "{id}",
+        "on-click": "activate",
+        "sort-by-number": true,
+        "all-outputs": true,
+        "active-only": false
+    },
+    "custom/cpu": {
+        "exec": "top -bn1 | grep 'Cpu(s)' | awk '{print $2}' | cut -d. -f1",
+        "format": "CPU:{}%",
+        "interval": 2,
+        "tooltip": false
+    },
+    "custom/gpu": {
+        "exec": "nvidia-smi --query-gpu=utilization.gpu --format=csv,noheader,nounits | tr -d ' '",
+        "format": "GPU:{}%",
+        "interval": 2,
+        "tooltip": false
+    },
+    "custom/ram": {
+        "exec": "free -m | awk '/^Mem:/ {printf \"%.1fG\", $3/1024}'",
+        "format": "{}",
+        "interval": 5,
+        "tooltip": false
+    },
+    "clock": {
+        "format": "{:%I:%M:%S %a %d/%m/%y }",
+        "interval": 1,
+        "tooltip": false
+    },
+    "bluetooth": {
+         "format": "󰂯",
+         "format-connected": "󰂱",
+         "format-disabled": "󰂲",
+         "tooltip-format": "{controller_alias} ({controller_address})",
+         "tooltip-format-connected": "{device_alias} ({device_address})",
+         "on-click": "bt-connect-rofi",
+    }
+}

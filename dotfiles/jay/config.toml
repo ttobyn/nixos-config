@@ -1,0 +1,182 @@
+##Keyboard
+keymap = """
+xkb_keymap {
+    xkb_keycodes { include "evdev+aliases(qwerty)" };
+    xkb_types    { include "complete" };
+    xkb_compat   { include "complete" };
+    xkb_symbols  { include "pc+gb+inet(evdev)" };
+};
+"""
+
+repeat-rate = { rate = 30, delay = 500 }
+
+focus-follows-mouse = true
+unstable-mouse-follows-focus = true
+middle-click-paste = false
+
+window-management-key = "Super_L"
+pointer-revert-key = "NoSymbol"
+
+workspace-display-order = "sorted"
+show-bar = true
+show-titles = false
+
+idle.minutes = 120
+
+##Mouse
+[[inputs]]
+tag = "mouse"
+
+match.name = "Endgame Gear Endgame Gear OP1 8k Gaming Mouse"
+
+accel-profile = "Flat"
+accel-speed = -0.93
+
+##GPU
+render-device = { pci-vendor = 0x10de, pci-model = 0x2489 }
+
+[[drm-devices]]
+name = "nvidia"
+match.pci-vendor = 0x10de
+match.pci-model = 0x2489
+gfx-api = "Vulkan"
+
+##Outputs
+[[outputs]]
+name = "left"
+match.serial-number = "VVG205330429"   # ViewSonic VX2758, was DP-1
+enabled = true
+mode = { width = 1920, height = 1080, refresh-rate = 120.402 }
+x = 0
+y = -40
+tearing.mode = "variant1"
+vrr.mode = "always"
+
+[[outputs]]
+name = "right"
+match.serial-number = "842610998"      # Iiyama PL2470H, was DP-2
+enabled = true
+mode = { width = 1920, height = 1080, refresh-rate = 165.003 }
+x = 1920
+y = -80
+tearing.mode = "variant1"
+vrr.mode = "always"
+
+##Startup
+on-graphics-initialized = [
+
+{ type = "exec", exec = "waybar" },
+{ type = "exec", exec = "lxqt-policykit-agent" },
+
+{ type = "exec", exec = ["wl-paste", "--type", "text", "--watch", "cliphist", "store"] },
+{ type = "exec", exec = ["wl-paste", "--type", "image", "--watch", "cliphist", "store"] },
+
+{ type = "exec", exec = "easyeffects" },
+
+{ type = "exec", exec = "qpwgraph --minimized" },
+
+{ type = "exec", exec = "/home/tobyn/.local/bin/link-minecraft-obs.sh" },
+
+{ type = "exec", exec = ["bash", "-c", "pkill keymapper; sleep 0.5; keymapper -u"] },
+
+{ type = "show-workspace", name = "1", output.name = "right" },
+{ type = "show-workspace", name = "6", output.name = "left" }
+
+]
+
+
+##Theme
+[theme]
+
+border-width = 1
+
+##Shortcuts
+[shortcuts]
+
+#Applications
+logo-t = { type = "exec", exec = "foot" }
+
+logo-e = { type = "exec", exec = "dolphin" }
+
+logo-b = { type = "exec", exec = "helium-browser" }
+
+logo-space = { type = "exec", exec = ["/usr/bin/rofi", "-show", "drun", "-show-icons"] }
+
+logo-v = { type = "exec", exec = { shell = "cliphist list | rofi -dmenu | cliphist decode | wl-copy" } }
+
+ctrl-shift-Tab = { type = "exec", exec = ["foot", "--app-id=btop", "btop"] }
+
+logo-F12 = { type = "exec", exec = { shell = "grimblast save area ~/Pictures/$(date +%Y-%m-%d_%H-%M-%S).png" } }
+
+#Windows
+logo-shift-q = "close"
+
+logo-f = "toggle-floating"
+
+#Movement
+logo-Left  = "focus-left"
+logo-Right = "focus-right"
+logo-Up    = "focus-up"
+logo-Down  = "focus-down"
+
+logo-shift-Left  = "move-left"
+logo-shift-Right = "move-right"
+logo-shift-Up    = "move-up"
+logo-shift-Down  = "move-down"
+
+#Workspaces
+logo-1 = { type = "show-workspace", name = "1" }
+logo-2 = { type = "show-workspace", name = "2" }
+logo-3 = { type = "show-workspace", name = "3" }
+logo-4 = { type = "show-workspace", name = "4" }
+logo-5 = { type = "show-workspace", name = "5" }
+logo-6 = { type = "show-workspace", name = "6" }
+logo-7 = { type = "show-workspace", name = "7" }
+logo-8 = { type = "show-workspace", name = "8" }
+logo-9 = { type = "show-workspace", name = "9" }
+logo-0 = { type = "show-workspace", name = "10" }
+
+logo-shift-1 = { type = "move-to-workspace", name = "1" }
+logo-shift-2 = { type = "move-to-workspace", name = "2" }
+logo-shift-3 = { type = "move-to-workspace", name = "3" }
+logo-shift-4 = { type = "move-to-workspace", name = "4" }
+logo-shift-5 = { type = "move-to-workspace", name = "5" }
+logo-shift-6 = { type = "move-to-workspace", name = "6" }
+logo-shift-7 = { type = "move-to-workspace", name = "7" }
+logo-shift-8 = { type = "move-to-workspace", name = "8" }
+logo-shift-9 = { type = "move-to-workspace", name = "9" }
+logo-shift-0 = { type = "move-to-workspace", name = "10" }
+
+#Audio
+XF86AudioRaiseVolume = { type = "exec", exec = ["wpctl","set-volume","-l","1","@DEFAULT_AUDIO_SINK@","5%+"] }
+
+XF86AudioLowerVolume = { type = "exec", exec = ["wpctl","set-volume","@DEFAULT_AUDIO_SINK@","5%-"] }
+
+XF86AudioMute = { type = "exec", exec = ["wpctl","set-mute","@DEFAULT_AUDIO_SINK@","toggle"] }
+
+XF86AudioMicMute = { type = "exec", exec = ["wpctl","set-mute","@DEFAULT_AUDIO_SOURCE@","toggle"] }
+
+#Media
+F7 = { type = "exec", exec = ["playerctl", "previous"] }
+
+F8 = { type = "exec", exec = ["playerctl", "play-pause"] }
+
+F9 = { type = "exec", exec = ["playerctl", "next"] }
+
+XF86AudioPlay = { type = "exec", exec = ["playerctl", "play-pause"] }
+
+[[clients]]
+name = "grimblast-capability"
+match.exe = "^/usr/sbin/grim$"
+capabilities = "screencopy"
+
+##Window Rules
+[[windows]]
+name = "foot"
+match.app-id = "foot"
+action = "float"
+
+[[windows]]
+name = "btop"
+match.app-id = "btop"
+action = "float"

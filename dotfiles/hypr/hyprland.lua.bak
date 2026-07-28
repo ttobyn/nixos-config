@@ -1,0 +1,184 @@
+-- hyprland.lua
+
+local mainMod = "SUPER"
+
+------------------
+---- PROGRAMS ----
+------------------
+
+local fileManager = "dolphin"
+
+-------------------------
+---- ENV VARIABLES ----
+-------------------------
+
+hl.env("XCURSOR_SIZE", "24")
+hl.env("HYPRCURSOR_SIZE", "24")
+hl.env("QT_STYLE_OVERRIDE", "kvantum")
+hl.env("QT_QPA_PLATFORMTHEME", "qt6ct")
+hl.env("GTK_THEME", "Adwaita-dark")
+hl.env("LIBVA_DRIVER_NAME", "nvidia")
+hl.env("__GLX_VENDOR_LIBRARY_NAME", "nvidia")
+hl.env("MOZ_ENABLE_WAYLAND", "1")
+hl.env("GBM_BACKEND", "nvidia-drm")
+hl.env("KDEDIRS", "/usr")
+hl.env("XDG_CURRENT_DESKTOP", "Hyprland")
+
+------------------
+---- MONITORS ----
+------------------
+
+hl.monitor({ output = "DP-1", mode = "1920x1080@120.40", position = "0x-40", scale = 1, vrr = false })
+hl.monitor({ output = "DP-2", mode = "1920x1080@165.00", position = "1920x-80", scale = 1, vrr = true })
+hl.monitor({ output = "", mode = "preferred", position = "auto", scale = 1 })
+
+---------------------
+---- AUTOSTART ----
+---------------------
+
+hl.on("hyprland.start", function()
+hl.exec_cmd("waybar")
+hl.exec_cmd("awww-daemon")
+hl.exec_cmd("lxqt-policykit-agent")
+hl.exec_cmd("kde-connect")
+hl.exec_cmd("kdeconnect-indicator")
+hl.exec_cmd("wl-paste --type text --watch cliphist store")
+hl.exec_cmd("wl-paste --type image --watch cliphist store")
+hl.exec_cmd("easyeffects --gapplication-service")
+end)
+
+---------------------
+---- LOOK & FEEL ----
+---------------------
+
+hl.config({
+    general = {
+        gaps_in = 3,
+        gaps_out = 4,
+        border_size = 0,
+        ["col.active_border"] = "rgba(33ccffee)",
+          ["col.inactive_border"] = "rgba(595959aa)",
+          resize_on_border = false,
+          allow_tearing = true,
+          layout = "dwindle",
+          snap = { enabled = true }
+    },
+
+    decoration = {
+        rounding = 0,
+        active_opacity = 1.0,
+        inactive_opacity = 1.0,
+        shadow = { enabled = false },
+        blur = { enabled = false }
+    },
+
+    animations = { enabled = false },
+
+    dwindle = { preserve_split = true },
+
+    misc = {
+        force_default_wallpaper = 0,
+            disable_hyprland_logo = true,
+            vrr = 2
+    },
+
+    xwayland = { enabled = true }
+})
+
+-----------------------
+---- BEZIERS ---------
+-----------------------
+
+hl.curve("easeOutQuint",   { type = "bezier", points = { {0.23, 1}, {0.32, 1} } })
+hl.curve("easeInOutCubic", { type = "bezier", points = { {0.65, 0.05}, {0.36, 1} } })
+
+hl.animation({ leaf = "global", enabled = true, speed = 10, bezier = "default" })
+
+------------------
+---- INPUT -------
+------------------
+
+hl.config({
+    input = {
+        kb_layout = "gb",
+        follow_mouse = 1,
+        sensitivity = -0.93,
+        accel_profile = "flat",
+    }
+})
+
+------------------
+---- WINDOW RULES
+------------------
+
+hl.window_rule({ name = "foot", float = true, size = "925 300", move = "975 50", match = { class = "foot" } })
+hl.window_rule({ name = "btop", float = true, size = "925 500", match = { class = "btop" } })
+
+------------------
+---- KEYBINDS ----
+------------------
+
+-- apps
+hl.bind(mainMod .. " + T", hl.dsp.exec_cmd("foot"))
+hl.bind(mainMod .. " + E", hl.dsp.exec_cmd("kitty -e yazi"))
+hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("firefox"))
+hl.bind(mainMod .. " + Space", hl.dsp.exec_cmd("rofi -show drun"))
+
+-- window
+hl.bind(mainMod .. " + SHIFT + Q", hl.dsp.window.kill())
+hl.bind(mainMod .. " + F", hl.dsp.window.float({ action = "toggle" }))
+
+hl.bind(mainMod .. " + LEFT", hl.dsp.window.move({ direction = "l" }))
+hl.bind(mainMod .. " + RIGHT", hl.dsp.window.move({ direction = "r" }))
+hl.bind(mainMod .. " + UP", hl.dsp.window.move({ direction = "u" }))
+hl.bind(mainMod .. " + DOWN", hl.dsp.window.move({ direction = "d" }))
+
+hl.bind(mainMod .. " + SHIFT + LEFT", hl.dsp.window.swap({ direction = "l" }))
+hl.bind(mainMod .. " + SHIFT + RIGHT", hl.dsp.window.swap({ direction = "r" }))
+hl.bind(mainMod .. " + SHIFT + UP", hl.dsp.window.swap({ direction = "u" }))
+hl.bind(mainMod .. " + SHIFT + DOWN", hl.dsp.window.swap({ direction = "d" }))
+
+------------------
+---- WORKSPACES --
+------------------
+
+-- FIXED: correct Hyprland dispatch syntax
+
+hl.bind(mainMod .. " + Tab", hl.dsp.exec_cmd("hyprctl dispatch workspace +1"))
+hl.bind(mainMod .. " + mouse_down", hl.dsp.exec_cmd("hyprctl dispatch workspace +1"))
+hl.bind(mainMod .. " + mouse_up", hl.dsp.exec_cmd("hyprctl dispatch workspace -1"))
+
+for i = 1, 9 do
+    hl.bind(mainMod .. " + " .. i,
+            hl.dsp.exec_cmd("hyprctl dispatch workspace " .. i)
+    )
+
+    hl.bind(mainMod .. " + SHIFT + " .. i,
+            hl.dsp.exec_cmd("hyprctl dispatch movetoworkspace " .. i)
+    )
+    end
+
+    hl.bind(mainMod .. " + 0",
+            hl.dsp.exec_cmd("hyprctl dispatch workspace 10")
+    )
+
+    hl.bind(mainMod .. " + SHIFT + 0",
+            hl.dsp.exec_cmd("hyprctl dispatch movetoworkspace 10")
+    )
+
+    ------------------
+    ---- MOUSE FIX ---
+    ------------------
+
+    hl.on("hyprland.start", function()
+    hl.exec_cmd("hyprctl keyword bindm SUPER, mouse:272, movewindow")
+    hl.exec_cmd("hyprctl keyword bindm SUPER, mouse:273, resizewindow")
+    end)
+
+    ------------------
+    ---- MEDIA -------
+    ------------------
+
+    hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"))
+    hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"))
+    hl.bind("XF86AudioMute", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"))

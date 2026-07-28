@@ -1,0 +1,67 @@
+@import "/home/tobyn/.cache/wal/colors-waybar.css";
+
+* {
+font-family: "BigBlueTerm437 Nerd Font";
+font-size: 11px;
+font-weight: 800;
+border: none;
+border-radius: 0;
+color: @foreground;
+}
+window#waybar {
+    background-color: @background;
+}
+#workspaces,
+#clock,
+#cpu,
+#memory,
+#battery,
+#custom-bluetooth {
+background-color: @background;
+color: @foreground;
+padding: 0 8px;
+}
+#workspaces button {
+background-color: @background;
+color: @color8;
+padding: 0 8px;
+min-width: 24px;
+}
+#workspaces button.active {
+background-color: @background;
+color: @foreground;
+}
+#workspaces button:hover {
+background-color: @color0;
+color: @foreground;
+}
+#custom-brightness {
+color: @foreground;
+background-color: @background;
+padding: 0 8px;
+}
+#taskbar {
+background-color: @background;
+padding: 0 6px;
+}
+#taskbar button {
+background-color: @background;
+padding: 0 4px;
+}
+#taskbar button.active {
+background-color: @color0;
+}
+#taskbar button:hover {
+background-color: @color0;
+}
+#custom-sep {
+background-color: @background;
+color: @color8;
+padding: 0 1px;
+}
+#custom-bluetooth {
+font-size: 13px;
+}
+#custom-brightness {
+font-size: 11px;
+}
