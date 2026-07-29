@@ -12,19 +12,22 @@
     pcmanfm
     gvfs
     shared-mime-info
-    xarchiver
     unzip 
     gnutar
+    
+    qbittorrent
+    nicotine-plus
 
     kitty
     foot
     fastfetch
     bluetui
     btop
-
-    waybar
+    
     hyprsunset
     hyprpaper
+    grimblast
+    waybar
     adwaita-icon-theme
     
     ntfs3g

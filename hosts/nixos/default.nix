@@ -16,6 +16,7 @@
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.supportedFilesystems = [ "ntfs" ];
 
   networking.hostName = "nixos";
   networking.networkmanager.enable = true;
@@ -37,7 +38,7 @@
   fileSystems."/mnt/main_storage" = {
     device = "/dev/disk/by-uuid/5664518C64516FAB";
     fsType = "ntfs3";
-    options = [ "rw" "uid=1000" "gid=100" "nofail" ];
+    options = [ "rw" "uid=1000" "gid=100" "nofail" "force" ];
   };
 
   users.users."tobyn" = {

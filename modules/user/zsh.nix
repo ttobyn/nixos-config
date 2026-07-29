@@ -20,6 +20,12 @@
     };
     initContent = ''
       fastfetch
+
+      commit() {
+        git add -A
+        git commit -m "''${*:-update}"
+        git push
+      }
     '';
   };
 
