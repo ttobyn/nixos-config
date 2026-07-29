@@ -13,9 +13,14 @@
       url = "github:oxcl/nix-flake-helium-browser";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    spicetify-nix = {
+      url = "github:Gerg-L/spicetify-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { nixpkgs, home-manager, helium-flake, ... }:
+  outputs = { nixpkgs, home-manager, helium-flake, spicetify-nix, ... }:
   let
     system = "x86_64-linux";
   in {
@@ -34,6 +39,8 @@
             useGlobalPkgs = true;
             useUserPackages = true;
             backupFileExtension = "backup";
+
+            extraSpecialArgs = { inherit spicetify-nix; };
 
             users.tobyn = import ./home.nix;
           };

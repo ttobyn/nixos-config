@@ -10,6 +10,8 @@
     ../../modules/system/packages.nix
     ../../modules/system/ly.nix
     ../../modules/system/bluetooth.nix
+    ../../modules/system/audio.nix
+    ../../modules/system/gaming.nix
   ];
 
   boot.loader.systemd-boot.enable = true;

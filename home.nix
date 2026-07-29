@@ -5,6 +5,7 @@
     ./modules/user/zsh.nix
     ./modules/user/dotfiles.nix
     ./modules/user/fastfetch.nix
+    ./modules/user/spotify.nix   
   ];
 
   home.username = "tobyn";

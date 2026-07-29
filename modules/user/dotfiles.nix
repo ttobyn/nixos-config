@@ -25,5 +25,8 @@
   home.file.".config/rofi".source = ../../dotfiles/rofi;
   home.file.".config/jay".source = ../../dotfiles/jay;
   home.file.".config/foot".source = ../../dotfiles/foot;
+  home.file.".config/waywall".source = ../../dotfiles/waywall;
   home.file.".local/share/fonts".source = ../../dotfiles/fonts;
+  home.file.".config/easyeffects".source = ../../dotfiles/easyeffects; 
+  
 }
