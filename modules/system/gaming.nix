@@ -41,5 +41,6 @@
     vulkan-tools
     winetricks
     pkgs.glfw3-minecraft
+    jdk21
   ];
 }

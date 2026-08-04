@@ -3,8 +3,8 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ../../modules/system/compositors.nix
     ../../modules/system/nvidia.nix
-    ../../modules/system/environment
     ../../modules/system/helium.nix
     ../../modules/system/shell.nix
     ../../modules/system/packages.nix
@@ -17,11 +17,22 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.supportedFilesystems = [ "ntfs" ];
+  boot.kernelPackages = pkgs.linuxPackages_zen;
+  boot.kernelModules = [ "i2c-dev" ];
 
   networking.hostName = "nixos";
   networking.networkmanager.enable = true;
 
   time.timeZone = "Europe/London";
+  
+  programs.nix-ld = {
+    enable = true;
+    libraries = with pkgs; [
+      pkgs.libX11
+      pkgs.libXtst
+      pkgs.libXi
+    ];
+  };
 
   fileSystems."/mnt/arch" = {
     device = "/dev/disk/by-uuid/d68ad949-dc7b-4abe-8336-2789cf2be479";
@@ -41,6 +52,21 @@
     options = [ "rw" "uid=1000" "gid=100" "nofail" "force" ];
   };
 
+  security.wrappers.jay = {
+    owner = "root";
+    group = "root";
+    capabilities = "cap_sys_nice+ep";
+    source = "${pkgs.jay}/bin/jay";
+  };
+  
+  environment.etc."wayland-sessions/jay.desktop".text = ''
+    [Desktop Entry]
+    Name=Jay
+    Exec=/run/wrappers/bin/jay
+    Type=Application
+    DesktopName=Jay
+  '';
+
   users.users."tobyn" = {
     isNormalUser = true;
     extraGroups = [ "networkmanager" "wheel" ];
@@ -54,3 +80,4 @@
 
   system.stateVersion = "26.05";
 }
+

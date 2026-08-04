@@ -27,6 +27,8 @@
   home.file.".config/foot".source = ../../dotfiles/foot;
   home.file.".config/waywall".source = ../../dotfiles/waywall;
   home.file.".local/share/fonts".source = ../../dotfiles/fonts;
-  home.file.".config/easyeffects".source = ../../dotfiles/easyeffects; 
+  home.file.".config/easyeffects".source = ../../dotfiles/easyeffects;
+  home.file.".config/swappy".source = ../../dotfiles/swappy; 
+  home.file.".config/i3status-rust".source = ../../dotfiles/i3status-rust;
   
 }

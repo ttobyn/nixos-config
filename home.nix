@@ -8,6 +8,14 @@
     ./modules/user/spotify.nix   
   ];
 
+  home.pointerCursor = {
+    gtk.enable = true;
+
+    name = "Adwaita";
+    package = pkgs.adwaita-icon-theme;
+    size = 24;
+};
+
   home.username = "tobyn";
   home.homeDirectory = "/home/tobyn";
   home.stateVersion = "26.05";

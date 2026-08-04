@@ -5,6 +5,7 @@
     {
       "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
       "logo": {
+        "source": "nixos_small",
         "padding": { "right": 0 },
         "color": {
           "1": "white",
@@ -15,7 +16,7 @@
           "6": "white",
           "7": "white",
           "8": "white",
-          "9": "white",
+          "9": "white"
         }
       },
       "display": {
@@ -27,18 +28,13 @@
         }
       },
       "modules": [
-        "os",
-        "wm",
-        "kernel",
-        {
-          "type": "command",
-          "key": "Age",
-          "text": "echo $(( ($(date +%s) - $(stat -c %W /)) / 86400 )) days"
-        },
-        "uptime",
-        "memory",
-        "cpu",
-        "gpu"
+        { "type": "title", "format": "{user-name}" },
+        { "type": "os", "format": "{name}" },
+        { "type": "wm", "format": "{1}" },
+        { "type": "packages", "format": "{all}" },
+        { "type": "disk", "folders": "/", "key": "age", "format": "{days} days" },
+        { "type": "uptime", "format": "{hours}h {minutes}m" },
+        { "type": "memory", "format": "{used} / {total}" }
       ]
     }
   '';

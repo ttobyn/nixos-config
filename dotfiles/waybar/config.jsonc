@@ -7,13 +7,13 @@
     "margin-bottom": 0,
     "margin-left": 0,
     "margin-right": 0,
-    "modules-left": ["hyprland/workspaces","bluetooth"],
+    "modules-left": ["ext/workspaces","bluetooth"],
     "modules-center": [],
     "modules-right": ["clock","custom/cpu","custom/gpu","custom/ram"],
-    "hyprland/workspaces": {
-        "format": "{id}",
+    "ext/workspaces": {
+        "format": "{name}",
         "on-click": "activate",
-        "sort-by-number": true,
+        "sort-by-id": true,
         "all-outputs": true,
         "active-only": false
     },
