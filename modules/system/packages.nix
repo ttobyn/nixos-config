@@ -15,8 +15,8 @@
     pcmanfm
     gvfs
     shared-mime-info
-    unzip 
-    gnutar
+    p7zip
+    xarchiver
     
     hyprsunset
     hyprpaper

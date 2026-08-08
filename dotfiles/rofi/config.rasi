@@ -1,5 +1,5 @@
 * {
-    font: "BigBlueTerm437 Nerd Font 9";
+    font: "XanhMono 9";
     g-spacing: 4px;
     g-margin: 0;
     b-radius: 0px;

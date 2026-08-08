@@ -14,7 +14,7 @@ separator_fg = "#666666"
 block = "time"
 interval = 1
 [block.format]
-full = "$timestamp.datetime(f:'%H:%M:%S %a %d/%m/%y')"
+full = "$timestamp.datetime(f:'%I:%M:%S%p %a %d/%m/%y')"
 
 [[block]]
 block = "cpu"

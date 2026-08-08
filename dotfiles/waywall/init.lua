@@ -53,7 +53,7 @@ local config = {
         ninb_anchor = cfg.ninbot_anchor,
         ninb_opacity = cfg.ninbot_opacity,
         cursor_theme = "Adwaita",
-        cursor_icon = "default",
+        cursor_icon = "cross",
 cursor_size = 26,
     },
     experimental = {

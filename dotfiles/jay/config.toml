@@ -185,7 +185,7 @@ capabilities = "screencopy"
 [[windows]]
 name = "foot"
 match.app-id = "foot"
-action = "float"
+initial-tile-state = "floating"
 
 [[windows]]
 name = "btop"
