@@ -7,6 +7,10 @@
     shellAliases = {
       test = "echo Working";
       rebuild = "sudo nixos-rebuild switch --flake /etc/nixos#nixos";
+      vpn-uk = "sudo systemctl start wg-quick-surfshark-uk";
+      vpn-nl = "sudo systemctl start wg-quick-surfshark-nl";
+      vpn-us = "sudo systemctl start wg-quick-surfshark-us";
+      vpn-off = "sudo systemctl stop wg-quick-surfshark-uk wg-quick-surfshark-nl wg-quick-surfshark-us";
     };
   };
 
@@ -17,6 +21,10 @@
     shellAliases = {
       test = "echo Working";
       rebuild = "sudo nixos-rebuild switch --flake /etc/nixos#nixos";
+      vpn-uk = "sudo systemctl start wg-quick-surfshark-uk";
+      vpn-nl = "sudo systemctl start wg-quick-surfshark-nl";
+      vpn-us = "sudo systemctl start wg-quick-surfshark-us";
+      vpn-off = "sudo systemctl stop wg-quick-surfshark-uk wg-quick-surfshark-nl wg-quick-surfshark-us";
     };
     initContent = ''
       fastfetch

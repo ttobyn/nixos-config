@@ -1,6 +1,11 @@
 { config, lib, pkgs, ... }:
 {
   nixpkgs.config.allowUnfree = true;
+  services.flatpak.enable = true;
+  environment.sessionVariables.XDG_DATA_DIRS = [
+    "/var/lib/flatpak/exports/share"
+  ];
+
   environment.systemPackages = with pkgs; [
     foot
     fastfetch
@@ -13,7 +18,6 @@
     git
     
     pcmanfm
-    gvfs
     shared-mime-info
     p7zip
     xarchiver
@@ -33,7 +37,7 @@
     
     ntfs3g
     strace
-
+    
     qbittorrent
     nicotine-plus
   ];

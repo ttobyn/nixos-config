@@ -106,8 +106,8 @@ i3bar-separator = ""
 logo-t = { type = "exec", exec = "foot" }
 logo-e = { type = "exec", exec = "pcmanfm" }
 logo-b = { type = "exec", exec = "helium" }
-logo-space = { type = "exec", exec = ["/etc/profiles/per-user/tobyn/bin/rofi", "-x11", "-show", "drun", "-show-icons"] }
-logo-v = { type = "exec", exec = { shell = "cliphist list | rofi -dmenu | cliphist decode | wl-copy" } }
+logo-space = { type = "exec", exec = ["rofi", "-show", "drun"] }
+logo-v = { type = "exec", exec = { prog = "bash", args = [ "-lc", "cliphist list | rofi -dmenu -p clipboard | cliphist decode | wl-copy" ], privileged = true } }
 ctrl-shift-Tab = { type = "exec", exec = ["foot", "--app-id=btop", "btop"] }
 logo-F12 = { type = "exec", exec = { shell = "grim -g \"$(slurp)\" - | swappy -f -" } }
 
@@ -115,15 +115,15 @@ logo-F12 = { type = "exec", exec = { shell = "grim -g \"$(slurp)\" - | swappy -f
 logo-shift-q = "close"
 logo-f = "toggle-floating"
 
-logo-Left  = "focus-left"
-logo-Right = "focus-right"
-logo-Up    = "focus-up"
-logo-Down  = "focus-down"
+logo-a = "focus-left"
+logo-d = "focus-right"
+logo-w    = "focus-up"
+logo-s  = "focus-down"
 
-logo-shift-Left  = "move-left"
-logo-shift-Right = "move-right"
-logo-shift-Up    = "move-up"
-logo-shift-Down  = "move-down"
+logo-shift-a  = "move-left"
+logo-shift-d = "move-right"
+logo-shift-w    = "move-up"
+logo-shift-s  = "move-down"
 
 #Workspaces
 logo-1 = { type = "show-workspace", name = "1" }

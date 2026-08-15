@@ -12,16 +12,19 @@
     ../../modules/system/bluetooth.nix
     ../../modules/system/audio.nix
     ../../modules/system/gaming.nix
+    ../../modules/system/vpn.nix
   ];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.supportedFilesystems = [ "ntfs" ];
-  boot.kernelPackages = pkgs.linuxPackages_zen;
   boot.kernelModules = [ "i2c-dev" ];
 
   networking.hostName = "nixos";
   networking.networkmanager.enable = true;
+  
+  services.gvfs.enable = true;
+  services.udisks2.enable = true;
 
   time.timeZone = "Europe/London";
   
@@ -69,7 +72,7 @@
 
   users.users."tobyn" = {
     isNormalUser = true;
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "gamemode" ];
     shell = pkgs.zsh;
     packages = with pkgs; [
       tree
@@ -80,4 +83,3 @@
 
   system.stateVersion = "26.05";
 }
-
