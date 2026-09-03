@@ -28,14 +28,14 @@ render-device = { pci-vendor = 0x10de, pci-model = 0x2489 }
 #Startup Actions
 on-graphics-initialized = [
 
-{ type = "exec", exec = { prog = "swaybg", args = ["--output", "DP-2", "-i", "/home/tobyn/Downloads/Wallpapers/snowy house.jpg", "-m", "fill", "--output", "DP-1", "-i", "/home/tobyn/Downloads/Wallpapers/snowy house.jpg", "-m", "fill"], privileged = true } },
+{ type = "exec", exec = { prog = "bash", args = ["-c", "echo \"MARKER graphics W=$WAYLAND_DISPLAY P=$PATH\" >> /home/tobyn/.jay-startup-marker"], privileged = true } },
+
+{ type = "exec", exec = { prog = "swaybg", args = ["--output", "right", "-i", "/home/tobyn/.local/share/wallpapers/snowy house.jpg", "-m", "fill", "--output", "left", "-i", "/home/tobyn/.local/share/wallpapers/snowy house.jpg", "-m", "fill"], privileged = true } },
 
 { type = "exec", exec = "lxqt-policykit-agent" },
 
-{ type = "exec", exec = ["wl-paste", "--type", "text", "--watch", "cliphist", "store"] },
-{ type = "exec", exec = ["wl-paste", "--type", "image", "--watch", "cliphist", "store"] },
-
-{ type = "exec", exec = "easyeffects" },
+{ type = "exec", exec = { prog = "wl-paste", args = ["--type", "text", "--watch", "cliphist", "store"], env.WAYLAND_DISPLAY = "wayland-1.jay" } },
+{ type = "exec", exec = { prog = "wl-paste", args = ["--type", "image", "--watch", "cliphist", "store"], env.WAYLAND_DISPLAY = "wayland-1.jay" } },
 
 { type = "exec", exec = "qpwgraph --minimized" },
 
@@ -49,6 +49,11 @@ on-graphics-initialized = [
 { type = "show-workspace", name = "2",  output.name = "left"  },
 
 ]
+
+on-startup = { type = "exec", exec = { prog = "bash", args = ["-c", "echo \"MARKER startup W=$WAYLAND_DISPLAY P=$PATH\" >> /home/tobyn/.jay-startup-marker"], privileged = true } }
+
+[transactions]
+timeout.millis = 0
 
 [[inputs]]
 tag = "mouse"
@@ -70,17 +75,17 @@ match.serial-number = "VVG205330429"   # ViewSonic VX2758, was DP-1
 enabled = true
 mode = { width = 1920, height = 1080, refresh-rate = 120.402 }
 x = 0
-y = -40
+y = 0
 tearing.mode = "always"
-vrr.mode = "always"
+vrr.mode = "never"
 
 [[outputs]]
 name = "right"
-match.serial-number = "842610998"      # Iiyama PL2470H, was DP-2
+match.serial-number = "825307184"      # Iiyama PL2770H, DP-2
 enabled = true
 mode = { width = 1920, height = 1080, refresh-rate = 165.003 }
 x = 1920
-y = -80
+y = 0
 tearing.mode = "variant1"
 vrr.mode = "always"
 
@@ -91,6 +96,8 @@ separator-color = "#ffffff"
 highlight-color = "#AAA7AD"
 focused-title-bg-color = "#AAA7AD"
 unfocused-title-bg-color = "#000000"
+
+bar-separator-width = 0
 
 font = "XanhMono"
 bar-font = "XanhMono"
@@ -104,12 +111,13 @@ i3bar-separator = ""
 [shortcuts]
 #Programs
 logo-t = { type = "exec", exec = "foot" }
-logo-e = { type = "exec", exec = "pcmanfm" }
+logo-e = { type = "exec", exec = "thunar" }
 logo-b = { type = "exec", exec = "helium" }
 logo-space = { type = "exec", exec = ["rofi", "-show", "drun"] }
 logo-v = { type = "exec", exec = { prog = "bash", args = [ "-lc", "cliphist list | rofi -dmenu -p clipboard | cliphist decode | wl-copy" ], privileged = true } }
 ctrl-shift-Tab = { type = "exec", exec = ["foot", "--app-id=btop", "btop"] }
-logo-F12 = { type = "exec", exec = { shell = "grim -g \"$(slurp)\" - | swappy -f -" } }
+logo-F12 = { type = "exec", exec = { shell = "geom=$(slurp) && grim -g \"$geom\" - | wl-copy" } }
+logo-shift-F12 = { type = "exec", exec = { shell = "geom=$(slurp) && grim -g \"$geom\" - | wl-copy && grim -g \"$geom\" \"/home/tobyn/Screenshots/$(date +%Y-%m-%d_%H-%M-%S).png\"" } }
 
 #Window Management 
 logo-shift-q = "close"
@@ -160,26 +168,24 @@ logo-F7 = { type = "exec", exec = ["playerctl", "previous"] }
 logo-F8 = { type = "exec", exec = ["playerctl", "play-pause"] }
 logo-F9 = { type = "exec", exec = ["playerctl", "next"] }
 
-#Brightness
-logo-XF86AudioRaiseVolume = {
-  type = "exec",
-  exec = {
-    shell = "ddcutil --bus=5 setvcp 10 + 10 && ddcutil --bus=7 setvcp 10 + 10"
-  }
-}
+#EasyEffects Toggle
+logo-shift-e = { type = "exec", exec = "/home/tobyn/.local/bin/toggle-easyeffects" }
 
-logo-XF86AudioLowerVolume = {
-  type = "exec",
-  exec = {
-    shell = "ddcutil --bus=5 setvcp 10 - 10 && ddcutil --bus=7 setvcp 10 - 10"
-  }
-}
-
-##Screenshot
+##Capabilities: Jay grants screencopy/data-control only via verbatim /proc/pid/exe paths
 [[clients]]
-name = "grimblast-capability"
-match.exe = "^/usr/sbin/grim$"
+name = "grim-screencopy"
+match.exe = "/nix/store/j46b9y2gj3dyw2mma1hl2wcbz3b6llws-grim-1.5.0/bin/grim"
 capabilities = "screencopy"
+
+[[clients]]
+name = "wl-paste-data-control"
+match.exe = "/nix/store/5biz40pc9n1r463bqnky55vjp42bxg76-wl-clipboard-2.3.0/bin/wl-paste"
+capabilities = "data-control"
+
+[[clients]]
+name = "wl-copy-data-control"
+match.exe = "/nix/store/5biz40pc9n1r463bqnky55vjp42bxg76-wl-clipboard-2.3.0/bin/wl-copy"
+capabilities = "data-control"
 
 ##Window Rules
 [[windows]]
@@ -191,3 +197,14 @@ initial-tile-state = "floating"
 name = "btop"
 match.app-id = "btop"
 action = "float"
+
+#Initial workspace->output assignment (Jay 1.14 fallback-free: robust regardless of cursor/startup order)
+[workspaces."1"]
+initial-output.name = "right"
+[workspaces."2"]
+initial-output.name = "left"
+
+#Brightness (Jay native Vulkan brightness - instant, repeats while held)
+[complex-shortcuts]
+logo-F5 = { action = { type = "exec", exec = ["/home/tobyn/.local/bin/brightness", "down"] }, repeat = true }
+logo-F6 = { action = { type = "exec", exec = ["/home/tobyn/.local/bin/brightness", "up"] }, repeat = true }
