@@ -1,0 +1,8 @@
+* {
+  background:                  #000000;
+  foreground:                  #ffffff;
+  alternate-normal-background: #111111;
+  selected-normal-background:  #ffffff;
+  selected-normal-foreground:  #000000;
+  border-color:                #ffffff;
+}
