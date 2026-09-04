@@ -124,7 +124,7 @@ in
   home.file.".config/foot".source = ./dotfiles/foot;
   home.file.".config/waywall".source = ./dotfiles/waywall;
   home.file.".config/fastfetch".source = ./dotfiles/fastfetch;
-  home.file.".config/starship".source = ./dotfiles/starship;
+  home.file.".config/starship.toml".source = ./dotfiles/starship/config.toml;
   home.file.".local/share/fonts".source = ./dotfiles/fonts;
   home.file.".local/share/wallpapers".source = ./assets/wallpapers;
   home.file.".config/easyeffects".source = ./dotfiles/easyeffects;
