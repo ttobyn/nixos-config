@@ -126,6 +126,8 @@ in
   home.file.".config/fastfetch".source = ./dotfiles/fastfetch;
   home.file.".config/starship.toml".source = ./dotfiles/starship/config.toml;
   home.file.".local/share/fonts".source = ./dotfiles/fonts;
+  home.file.".icons/Papirus-Dark".source =
+    "${pkgs.papirus-icon-theme.override { color = "white"; }}/share/icons/Papirus-Dark";
   home.file.".local/share/wallpapers".source = ./assets/wallpapers;
   home.file.".config/easyeffects".source = ./dotfiles/easyeffects;
   home.file.".config/swappy".source = ./dotfiles/swappy; 

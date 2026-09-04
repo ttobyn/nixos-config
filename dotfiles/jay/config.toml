@@ -116,8 +116,8 @@ logo-b = { type = "exec", exec = "helium" }
 logo-space = { type = "exec", exec = ["rofi", "-show", "drun"] }
 logo-v = { type = "exec", exec = { prog = "bash", args = [ "-lc", "cliphist list | rofi -dmenu -p clipboard -theme $HOME/.config/rofi/clipboard.rasi | cliphist decode | wl-copy" ], privileged = true } }
 ctrl-shift-Tab = { type = "exec", exec = ["foot", "--app-id=btop", "btop"] }
-logo-F12 = { type = "exec", exec = { shell = "geom=$(slurp) && grim -g \"$geom\" - | wl-copy" } }
-logo-shift-F12 = { type = "exec", exec = { shell = "geom=$(slurp) && grim -g \"$geom\" - | wl-copy && grim -g \"$geom\" \"/home/tobyn/Screenshots/$(date +%Y-%m-%d_%H-%M-%S).png\"" } }
+logo-F12 = { type = "exec", exec = { shell = "geom=$(slurp) && grim -g \"$geom\" - | wl-copy -t image/png" } }
+logo-shift-F12 = { type = "exec", exec = { shell = "geom=$(slurp) && grim -g \"$geom\" - | wl-copy -t image/png && grim -g \"$geom\" \"/home/tobyn/Screenshots/$(date +%Y-%m-%d_%H-%M-%S).png\"" } }
 
 #Window Management 
 logo-shift-q = "close"
