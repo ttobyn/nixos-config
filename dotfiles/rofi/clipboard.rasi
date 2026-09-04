@@ -1,5 +1,0 @@
-@import "config.rasi"
-
-window {
-  width: 640px;
-}
