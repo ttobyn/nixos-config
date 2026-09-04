@@ -150,19 +150,19 @@
       }
     '';
   };
-  home.file.".config/hypr".source = ../../dotfiles/hypr;
-  home.file.".config/waybar".source = ../../dotfiles/waybar;
-  home.file.".config/rofi".source = ../../dotfiles/rofi;
-  home.file.".config/jay".source = ../../dotfiles/jay;
-  home.file.".config/foot".source = ../../dotfiles/foot;
-  home.file.".config/waywall".source = ../../dotfiles/waywall;
-  home.file.".config/fastfetch".source = ../../dotfiles/fastfetch;
-  home.file.".config/starship".source = ../../dotfiles/starship;
-  home.file.".local/share/fonts".source = ../../dotfiles/fonts;
-  home.file.".local/share/wallpapers".source = ../../assets/wallpapers;
-  home.file.".config/easyeffects".source = ../../dotfiles/easyeffects;
-  home.file.".config/swappy".source = ../../dotfiles/swappy; 
-  home.file.".config/i3status-rust".source = ../../dotfiles/i3status-rust;
+  home.file.".config/hypr".source = ./dotfiles/hypr;
+  home.file.".config/waybar".source = ./dotfiles/waybar;
+  home.file.".config/rofi".source = ./dotfiles/rofi;
+  home.file.".config/jay".source = ./dotfiles/jay;
+  home.file.".config/foot".source = ./dotfiles/foot;
+  home.file.".config/waywall".source = ./dotfiles/waywall;
+  home.file.".config/fastfetch".source = ./dotfiles/fastfetch;
+  home.file.".config/starship".source = ./dotfiles/starship;
+  home.file.".local/share/fonts".source = ./dotfiles/fonts;
+  home.file.".local/share/wallpapers".source = ./assets/wallpapers;
+  home.file.".config/easyeffects".source = ./dotfiles/easyeffects;
+  home.file.".config/swappy".source = ./dotfiles/swappy; 
+  home.file.".config/i3status-rust".source = ./dotfiles/i3status-rust;
   home.file.".config/opencode/opencode.jsonc".source =
-    ../../dotfiles/opencode/opencode.jsonc;
+    ./dotfiles/opencode/opencode.jsonc;
 }
