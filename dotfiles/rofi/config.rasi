@@ -47,6 +47,7 @@ textbox-prompt-colon {
 entry {
   background-color: transparent;
   text-color:       @foreground;
+  blink:            false;
 }
 
 listview {
@@ -62,10 +63,6 @@ element {
   text-color:       @foreground;
   padding:          5px 8px;
   border-radius:    0px;
-}
-
-element alternate {
-  background-color: @alternate-normal-background;
 }
 
 element selected {
