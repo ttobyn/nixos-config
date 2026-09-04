@@ -4,6 +4,7 @@
   font:             "XanhMono 9";
   background-color: transparent;
   text-color:       @foreground;
+  border:           0px;
 }
 
 configuration {
@@ -19,7 +20,7 @@ window {
   border-color:     @border-color;
   border-radius:    0px;
   padding:          12px;
-  width:            520px;
+  width:            440px;
 }
 
 mainbox {
