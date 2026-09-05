@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, ... }:
 {
   #RTX 3060ti
   hardware.graphics.enable = true;
@@ -7,7 +7,7 @@
     modesetting.enable = true;
     open = true;
     nvidiaSettings = true;
-    nvidiaPersistenced = true;
+    nvidiaPersistenced = false;
     powerManagement.enable = false;
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };

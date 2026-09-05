@@ -12,10 +12,7 @@
       proton-ge-bin
     ];
   };
-  programs.gamescope = {
-    enable = true;
-    capSysNice = true;
-  };
+  boot.kernelModules = [ "ntsync" ];
   programs.gamemode.enable = true;
   environment.etc."libinput/local-overrides.quirks".text = ''
     [Never Debounce]
@@ -24,15 +21,13 @@
   '';
   environment.sessionVariables.PROTON_ENABLE_NVAPI = "1";
   environment.systemPackages = with pkgs; [
-    mangohud
-    protonup-qt
-    heroic
-    prismlauncher
+    (prismlauncher.override { jdks = [ pkgs.jdk17 ]; })
     waywall
     vulkan-tools
     winetricks
     pkgs.glfw3-minecraft
-    jdk21
+    heroic
+    bedrock-on-linux
   ];
 
   #flatpak
@@ -41,7 +36,9 @@
     path = [ pkgs.flatpak ];
     script = ''
       flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-      flatpak install --system -y --noninteractive flathub org.vinegarhq.Sober
+      if ! flatpak info org.vinegarhq.Sober >/dev/null 2>&1; then
+        flatpak install --system -y --noninteractive flathub org.vinegarhq.Sober
+      fi
     '';
     serviceConfig.Type = "oneshot";
   };

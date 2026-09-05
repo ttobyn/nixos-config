@@ -506,7 +506,7 @@ for i = 0, 6, 1 do
 
                                                                                                                                                 [cfg.toggle_ninbot_key] = function()
                                                                                                                                                 if not is_ninb_running() then
-                                                                                                                                                    waywall.exec("java -Dawt.useSystemAAFontSettings=on -jar " .. nb_path)
+                                                                                                                                                    waywall.exec("/run/current-system/sw/bin/ninbot")
                                                                                                                                                     waywall.show_floating(true)
                                                                                                                                                     else
                                                                                                                                                         helpers.toggle_floating()
