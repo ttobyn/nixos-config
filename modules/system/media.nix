@@ -14,6 +14,7 @@
   environment.systemPackages = with pkgs; [
     easyeffects
     qpwgraph
+    playerctl
   ];
 
   hardware.bluetooth = {
@@ -29,6 +30,4 @@
       };
     };
   };
-
-  services.blueman.enable = true;
 }

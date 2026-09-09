@@ -30,9 +30,11 @@ on-graphics-initialized = [
 
 { type = "exec", exec = { prog = "bash", args = ["-c", "echo \"MARKER graphics W=$WAYLAND_DISPLAY P=$PATH\" >> /home/tobyn/.jay-startup-marker"], privileged = true } },
 
-{ type = "exec", exec = { prog = "swaybg", args = ["--output", "right", "-i", "/home/tobyn/.local/share/wallpapers/snowy house.jpg", "-m", "fill", "--output", "left", "-i", "/home/tobyn/.local/share/wallpapers/snowy house.jpg", "-m", "fill"], privileged = true } },
+{ type = "exec", exec = { prog = "swaybg", args = ["-i", "/home/tobyn/.local/share/wallpapers/snowy house.jpg", "-m", "fill"], privileged = true } },
 
 { type = "exec", exec = "lxqt-policykit-agent" },
+
+{ type = "exec", exec = "thunar --daemon" },
 
 { type = "exec", exec = { prog = "wl-paste", args = ["--type", "text", "--watch", "cliphist", "store"], env.WAYLAND_DISPLAY = "wayland-1.jay" } },
 { type = "exec", exec = { prog = "wl-paste", args = ["--type", "image", "--watch", "cliphist", "store"], env.WAYLAND_DISPLAY = "wayland-1.jay" } },
@@ -122,6 +124,7 @@ logo-shift-F12 = { type = "exec", exec = { shell = "geom=$(slurp) && grim -g \"$
 #Window Management 
 logo-shift-q = "close"
 logo-f = "toggle-floating"
+alt-shift-r = "reload-config-toml"
 
 logo-a = "focus-left"
 logo-d = "focus-right"
@@ -163,10 +166,15 @@ XF86AudioLowerVolume = { type = "exec", exec = ["wpctl","set-volume","@DEFAULT_A
 XF86AudioMute = { type = "exec", exec = ["wpctl","set-mute","@DEFAULT_AUDIO_SINK@","toggle"] }
 XF86AudioMicMute = { type = "exec", exec = ["wpctl","set-mute","@DEFAULT_AUDIO_SOURCE@","toggle"] }
 
-#Media
-logo-F7 = { type = "exec", exec = ["playerctl", "previous"] }
-logo-F8 = { type = "exec", exec = ["playerctl", "play-pause"] }
-logo-F9 = { type = "exec", exec = ["playerctl", "next"] }
+#Media (plain F-keys + XF86 keysyms so both Fn-lock modes work)
+#F8 = Spotify only, XF86 play/pause = pause-all panic button
+F7 = { type = "exec", exec = ["playerctl", "previous"] }
+F8 = { type = "exec", exec = { prog = "bash", args = ["-c", 'if [ "$(playerctl -p spotify status 2>/dev/null)" = Playing ]; then playerctl -p spotify play-pause; else playerctl play-pause; fi'] } }
+F9 = { type = "exec", exec = ["playerctl", "next"] }
+XF86AudioPrev = { type = "exec", exec = ["playerctl", "previous"] }
+XF86AudioPlay = { type = "exec", exec = { prog = "bash", args = ["-c", 'if playerctl -a status 2>/dev/null | grep -q Playing; then playerctl -a pause; else playerctl -a play; fi'] } }
+XF86AudioPause = { type = "exec", exec = { prog = "bash", args = ["-c", 'if playerctl -a status 2>/dev/null | grep -q Playing; then playerctl -a pause; else playerctl -a play; fi'] } }
+XF86AudioNext = { type = "exec", exec = ["playerctl", "next"] }
 
 #EasyEffects Toggle
 logo-shift-e = { type = "exec", exec = "/home/tobyn/.local/bin/toggle-easyeffects" }
@@ -192,19 +200,20 @@ capabilities = "data-control"
 name = "foot"
 match.app-id = "foot"
 initial-tile-state = "floating"
+initial-floating-size = { width = 960, height = 540 }
 
 [[windows]]
 name = "btop"
 match.app-id = "btop"
 action = "float"
 
-#Initial workspace->output assignment (Jay 1.14 fallback-free: robust regardless of cursor/startup order)
+#Initial workspace
 [workspaces."1"]
 initial-output.name = "right"
 [workspaces."2"]
 initial-output.name = "left"
 
-#Brightness (Jay native Vulkan brightness - instant, repeats while held)
+#Brightness
 [complex-shortcuts]
 logo-F5 = { action = { type = "exec", exec = ["/home/tobyn/.local/bin/brightness", "down"] }, repeat = true }
 logo-F6 = { action = { type = "exec", exec = ["/home/tobyn/.local/bin/brightness", "up"] }, repeat = true }

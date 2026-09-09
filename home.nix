@@ -117,8 +117,6 @@ in
     gtk3.extraCss = gtkCss;
     gtk4.extraCss = gtkCss;
   };
-  home.file.".config/hypr".source = ./dotfiles/hypr;
-  home.file.".config/waybar".source = ./dotfiles/waybar;
   home.file.".config/rofi".source = ./dotfiles/rofi;
   home.file.".config/jay".source = ./dotfiles/jay;
   home.file.".config/foot".source = ./dotfiles/foot;
@@ -132,6 +130,4 @@ in
   home.file.".config/easyeffects".source = ./dotfiles/easyeffects;
   home.file.".config/swappy".source = ./dotfiles/swappy; 
   home.file.".config/i3status-rust".source = ./dotfiles/i3status-rust;
-  home.file.".config/opencode/opencode.jsonc".source =
-    ./dotfiles/opencode/opencode.jsonc;
 }

@@ -12,7 +12,8 @@
   networking.hostName = "nixos";
   networking.networkmanager.enable = true;
 
-  services.gvfs.enable = true;
+  programs.dconf.enable = true;
+
   services.udisks2.enable = true;
 
   time.timeZone = "Europe/London";

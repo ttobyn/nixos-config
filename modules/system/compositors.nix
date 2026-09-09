@@ -15,10 +15,12 @@ let
   };
 in
 {
-  #Hyprland
-  programs.hyprland = {
+  # Hyprland's module used to auto-enable xdg.portal, which Flatpak
+  # asserts on — keep portals explicitly for file choosers et al.
+  xdg.portal = {
     enable = true;
-    xwayland.enable = true;
+    extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
+    config.common.default = "*";
   };
 
   environment.sessionVariables = {

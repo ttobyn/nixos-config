@@ -28,6 +28,7 @@
     pkgs.glfw3-minecraft
     heroic
     bedrock-on-linux
+    mangohud
   ];
 
   #flatpak
