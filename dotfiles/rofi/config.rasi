@@ -12,6 +12,10 @@ configuration {
   show-icons:   true;
   display-drun: "";
   icon-theme:   "Papirus-Dark";
+  sort:                true;
+  sorting-method:      "fzf";
+  disable-history:     false;
+  max-history-size:    50;
 }
 
 window {

@@ -200,7 +200,6 @@ capabilities = "data-control"
 name = "foot"
 match.app-id = "foot"
 initial-tile-state = "floating"
-initial-floating-size = { width = 960, height = 540 }
 
 [[windows]]
 name = "btop"

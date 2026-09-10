@@ -28,6 +28,6 @@ in
   };
 
   #Jay
-  environment.systemPackages = [ pkgs.jay ];
+  environment.systemPackages = [ pkgs.jay pkgs.xwayland ];
   services.displayManager.sessionPackages = [ jaySession ];
 }
