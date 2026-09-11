@@ -76,6 +76,7 @@ in
 
   programs.zsh = {
     enable = true;
+    enableCompletion = false;
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
     shellAliases = {
@@ -88,6 +89,11 @@ in
       ssh-pi = "TERM=xterm-256color ssh root@192.168.50.102";
     };
     initContent = ''
+      # cached compinit: full scan walks the whole nix store (~700ms),
+      # -C reuses the dump (~10ms). Regenerate manually with:
+      #   compinit -d ~/.zcompdump
+      autoload -U compinit && compinit -C -d ~/.zcompdump
+
       fastfetch
 
       eval "$(starship init zsh)"

@@ -3,6 +3,7 @@
  #native
   powerManagement.cpuFreqGovernor = "performance";
   hardware.graphics.enable32Bit = true;
+  hardware.steam-hardware.enable = true;
   programs.steam = {
     enable = true;
     remotePlay.openFirewall = true;
@@ -14,6 +15,7 @@
   };
   boot.kernelModules = [ "ntsync" ];
   programs.gamemode.enable = true;
+  programs.gamescope.enable = true;
   environment.etc."libinput/local-overrides.quirks".text = ''
     [Never Debounce]
     MatchUdevType=mouse

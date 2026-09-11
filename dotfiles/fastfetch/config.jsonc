@@ -27,7 +27,6 @@
     { "type": "title", "format": "{user-name}" },
     { "type": "os", "format": "{name}" },
     { "type": "wm", "format": "{1}" },
-    { "type": "packages", "format": "{all}" },
     { "type": "disk", "folders": "/", "key": "age", "format": "{days} days" },
     { "type": "uptime", "format": "{hours}h {minutes}m" },
     { "type": "memory", "format": "{used} / {total}" }

@@ -113,6 +113,9 @@ in
     ifuse
     glib # for gio mount afc://
     p7zip
+    file-roller
+    unzip
+    zip
     cliphist
     wl-clipboard
      
