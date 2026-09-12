@@ -86,7 +86,7 @@ in
       vpn-nl = "sudo systemctl start wg-quick-surfshark-nl";
       vpn-us = "sudo systemctl start wg-quick-surfshark-us";
       vpn-off = "sudo systemctl stop wg-quick-surfshark-uk wg-quick-surfshark-nl wg-quick-surfshark-us";
-      ssh-pi = "TERM=xterm-256color ssh root@192.168.50.102";
+      ssh-pi = "TERM=xterm-256color ssh root@192.168.50.149";
     };
     initContent = ''
       # cached compinit: full scan walks the whole nix store (~700ms),
