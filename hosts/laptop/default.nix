@@ -12,4 +12,8 @@
 
   # no gaming.nix / nvidia.nix on the laptop; stock kernel instead of cachyos
   networking.hostName = "laptop";
+
+  # laptop i3status bar: no nvidia_gpu block, battery block after RAM
+  home-manager.users.tobyn.home.file.".config/i3status-rust".source =
+    lib.mkForce ../../dotfiles/i3status-rust-laptop;
 }

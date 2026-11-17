@@ -1,0 +1,32 @@
+[theme]
+theme = "plain"
+
+[theme.overrides]
+idle_fg = "#FFFFFF"
+info_fg = "#FFFFFF"
+good_fg = "#FFFFFF"
+warning_fg = "#FFFFFF"
+critical_fg = "#FFFFFF"
+separator = ""
+separator_fg = "#666666"
+
+[[block]]
+block = "time"
+interval = 1
+[block.format]
+full = "$timestamp.datetime(f:'%I:%M:%S%p %a %d/%m/%y')"
+
+[[block]]
+block = "cpu"
+format = "  CPU$utilization"
+interval = 2
+
+[[block]]
+block = "custom"
+command = "free -m | awk '/^Mem:/ {printf \"%.1fG\", $3/1024}'"
+interval = 2
+
+[[block]]
+block = "battery"
+format = " BAT$percentage"
+interval = 2
