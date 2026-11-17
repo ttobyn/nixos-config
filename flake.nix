@@ -65,5 +65,24 @@
         }
       ];
     };
+
+    nixosConfigurations.laptop = nixpkgs.lib.nixosSystem {
+      inherit system;
+      modules = [
+        ./hosts/laptop/default.nix
+        helium-flake.nixosModules.default
+        agenix.nixosModules.default
+        home-manager.nixosModules.home-manager
+        {
+          home-manager = {
+            useGlobalPkgs = true;
+            useUserPackages = true;
+            backupFileExtension = "backup";
+            extraSpecialArgs = { inherit spicetify-nix; };
+            users.tobyn = import ./home.nix;
+          };
+        }
+      ];
+    };
   };
 }

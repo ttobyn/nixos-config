@@ -11,4 +11,7 @@
     ../../modules/system/apps.nix
     ../../modules/system/vpn.nix
   ];
+
+  # cachyos gaming kernel (needs the nix-cachyos-kernel overlay from flake.nix)
+  boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-latest;
 }

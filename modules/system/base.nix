@@ -1,9 +1,8 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 let
   myPkgs = import ../../packages.nix { inherit pkgs; };
 in
 {
-  boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-latest;
   programs.zsh.enable = true;
   programs.appimage.enable = true;
 
@@ -12,7 +11,7 @@ in
   boot.supportedFilesystems = [ "ntfs" ];
   boot.kernelModules = [ "i2c-dev" ];
 
-  networking.hostName = "nixos";
+  networking.hostName = lib.mkDefault "nixos";
   networking.networkmanager.enable = true;
 
   programs.dconf.enable = true;
