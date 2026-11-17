@@ -30,3 +30,8 @@ interval = 2
 block = "custom"
 command = "free -m | awk '/^Mem:/ {printf \"%.1fG\", $3/1024}'"
 interval = 2
+
+[[block]]
+block = "battery"
+format = " BAT$percentage"
+interval = 2
