@@ -11,15 +11,15 @@
     powerManagement.enable = false;
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
-  systemd.services.nvidia-power-limit = {
-    description = "Cap NVIDIA GPU power limit";
-    wantedBy = [ "multi-user.target" ];
-    after = [ "multi-user.target" ];
-    wants = [ "nvidia-persistenced.service" ];
-    serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = true;
-      ExecStart = "${config.hardware.nvidia.package.bin}/bin/nvidia-smi -pl 180";
-    };
-  };
+  # systemd.services.nvidia-power-limit = {
+  #   description = "Cap NVIDIA GPU power limit";
+  #   wantedBy = [ "multi-user.target" ];
+  #   after = [ "multi-user.target" ];
+  #   wants = [ "nvidia-persistenced.service" ];
+  #   serviceConfig = {
+  #     Type = "oneshot";
+  #     RemainAfterExit = true;
+  #     ExecStart = "${config.hardware.nvidia.package.bin}/bin/nvidia-smi -pl 180";
+  #   };
+  # };
 }
