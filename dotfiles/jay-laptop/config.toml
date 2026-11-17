@@ -1,0 +1,209 @@
+##Keyboard
+keymap = """
+xkb_keymap {
+    xkb_keycodes { include "evdev+aliases(qwerty)" };
+    xkb_types    { include "complete" };
+    xkb_compat   { include "complete" };
+    xkb_symbols  { include "pc+gb+inet(evdev)" };
+};
+"""
+
+repeat-rate = { rate = 30, delay = 500 }
+
+focus-follows-mouse = true
+unstable-mouse-follows-focus = true
+middle-click-paste = false
+
+window-management-key = "Super_L"
+pointer-revert-key = "NoSymbol"
+
+workspace-display-order = "sorted"
+show-bar = true
+show-titles = false
+
+idle.minutes = 120
+
+# NOTE: laptop variant — see hosts/laptop/default.nix. One internal display.
+# jay picks the panel's preferred mode by default (native res, highest refresh
+# = 144Hz on a 144Hz panel). If it doesn't, set e.g.:
+# mode = { width = 1920, height = 1080, refresh-rate = 144.0 }
+[[outputs]]
+name = "internal"
+enabled = true
+tearing.mode = "always"
+vrr.mode = "never"
+
+#Startup Actions
+on-graphics-initialized = [
+
+{ type = "exec", exec = { prog = "bash", args = ["-c", "echo \"MARKER graphics W=$WAYLAND_DISPLAY P=$PATH\" >> /home/tobyn/.jay-startup-marker"], privileged = true } },
+
+{ type = "exec", exec = { prog = "swaybg", args = ["-i", "/home/tobyn/.local/share/wallpapers/snowy house.jpg", "-m", "fill"], privileged = true } },
+
+{ type = "exec", exec = "lxqt-policykit-agent" },
+
+{ type = "exec", exec = "thunar --daemon" },
+
+{ type = "exec", exec = { prog = "cliphist", args = ["wipe"], env.WAYLAND_DISPLAY = "wayland-1.jay" } },
+{ type = "exec", exec = { prog = "wl-paste", args = ["--type", "text", "--watch", "cliphist", "store"], env.WAYLAND_DISPLAY = "wayland-1.jay" } },
+{ type = "exec", exec = { prog = "wl-paste", args = ["--type", "image", "--watch", "cliphist", "store"], env.WAYLAND_DISPLAY = "wayland-1.jay" } },
+
+{ type = "exec", exec = "qpwgraph --minimized" },
+
+{ type = "exec", exec = "/home/tobyn/.local/bin/link-minecraft-obs.sh" },
+
+{ type = "exec", exec = ["bash", "-c", "pkill keymapper; sleep 0.5; keymapper -u"] },
+
+{ type = "exec", exec = "wl-gammarelay-rs" },
+
+{ type = "show-workspace", name = "1",  output.name = "internal"  },
+{ type = "show-workspace", name = "2",  output.name = "internal"  },
+
+]
+
+on-startup = { type = "exec", exec = { prog = "bash", args = ["-c", "echo \"MARKER startup W=$WAYLAND_DISPLAY P=$PATH\" >> /home/tobyn/.jay-startup-marker"], privileged = true } }
+
+[transactions]
+timeout.millis = 0
+
+[[inputs]]
+tag = "mouse"
+
+match.name = "Endgame Gear Endgame Gear OP1 8k Gaming Mouse"
+
+accel-profile = "Flat"
+accel-speed = -0.93
+
+# NOTE: the [[outputs]] and [[drm-devices]] blocks live at the top of this file
+# (laptop: single internal display, no nvidia device).
+
+[theme]
+container-borders = "full"
+border-width = 5
+border-color = "#00000000"
+separator-color = "#00000000"
+highlight-color = "#AAA7AD"
+focused-title-bg-color = "#AAA7AD"
+unfocused-title-bg-color = "#00000000"
+
+bar-separator-width = 0
+
+font = "XanhMono"
+bar-font = "XanhMono"
+title-font = "XanhMono"
+
+[status]
+format = "i3bar"
+exec = { prog = "i3status-rs", args = ["/home/tobyn/.config/i3status-rust/config.toml"], privileged = true }
+i3bar-separator = ""
+
+[shortcuts]
+#Programs
+logo-t = { type = "exec", exec = "foot" }
+logo-e = { type = "exec", exec = "thunar" }
+logo-b = { type = "exec", exec = "helium" }
+logo-space = { type = "exec", exec = ["rofi", "-show", "drun"] }
+logo-v = { type = "exec", exec = { prog = "bash", args = [ "-lc", "cliphist list | rofi -dmenu -p clipboard -theme $HOME/.config/rofi/clipboard.rasi | cliphist decode | wl-copy" ], privileged = true } }
+ctrl-shift-Tab = { type = "exec", exec = ["foot", "--app-id=btop", "btop"] }
+logo-F12 = { type = "exec", exec = { shell = "geom=$(slurp) && grim -g \"$geom\" - | wl-copy -t image/png", privileged = true } }
+logo-shift-F12 = { type = "exec", exec = { shell = "geom=$(slurp) && grim -g \"$geom\" - | wl-copy -t image/png && grim -g \"$geom\" \"/home/tobyn/Screenshots/$(date +%Y-%m-%d_%H-%M-%S).png\"", privileged = true } }
+
+#Window Management 
+logo-shift-q = "close"
+logo-f = "toggle-floating"
+alt-shift-r = "reload-config-toml"
+
+logo-a = "focus-left"
+logo-d = "focus-right"
+logo-w    = "focus-up"
+logo-s  = "focus-down"
+
+logo-shift-a  = "move-left"
+logo-shift-d = "move-right"
+logo-shift-w    = "move-up"
+logo-shift-s  = "move-down"
+
+#Workspaces
+logo-1 = { type = "show-workspace", name = "1" }
+logo-2 = { type = "show-workspace", name = "2" }
+logo-3 = { type = "show-workspace", name = "3" }
+logo-4 = { type = "show-workspace", name = "4" }
+logo-5 = { type = "show-workspace", name = "5" }
+logo-6 = { type = "show-workspace", name = "6" }
+logo-7 = { type = "show-workspace", name = "7" }
+logo-8 = { type = "show-workspace", name = "8" }
+logo-9 = { type = "show-workspace", name = "9" }
+logo-0 = { type = "show-workspace", name = "10" }
+
+logo-shift-1 = { type = "move-to-workspace", name = "1" }
+logo-shift-2 = { type = "move-to-workspace", name = "2" }
+logo-shift-3 = { type = "move-to-workspace", name = "3" }
+logo-shift-4 = { type = "move-to-workspace", name = "4" }
+logo-shift-5 = { type = "move-to-workspace", name = "5" }
+logo-shift-6 = { type = "move-to-workspace", name = "6" }
+logo-shift-7 = { type = "move-to-workspace", name = "7" }
+logo-shift-8 = { type = "move-to-workspace", name = "8" }
+logo-shift-9 = { type = "move-to-workspace", name = "9" }
+logo-shift-0 = { type = "move-to-workspace", name = "10" }
+
+#Audio
+XF86AudioRaiseVolume = { type = "exec", exec = ["wpctl","set-volume","-l","1","@DEFAULT_AUDIO_SINK@","5%+"] }
+XF86AudioLowerVolume = { type = "exec", exec = ["wpctl","set-volume","@DEFAULT_AUDIO_SINK@","5%-"] }
+
+XF86AudioMute = { type = "exec", exec = ["wpctl","set-mute","@DEFAULT_AUDIO_SINK@","toggle"] }
+XF86AudioMicMute = { type = "exec", exec = ["wpctl","set-mute","@DEFAULT_AUDIO_SOURCE@","toggle"] }
+
+#Media (plain F-keys + XF86 keysyms so both Fn-lock modes work)
+#F8 = Spotify only, XF86 play/pause = pause-all panic button
+F7 = { type = "exec", exec = ["playerctl", "previous"] }
+F8 = { type = "exec", exec = { prog = "bash", args = ["-c", 'if [ "$(playerctl -p spotify status 2>/dev/null)" = Playing ]; then playerctl -p spotify play-pause; else playerctl play-pause; fi'] } }
+F9 = { type = "exec", exec = ["playerctl", "next"] }
+XF86AudioPrev = { type = "exec", exec = ["playerctl", "previous"] }
+XF86AudioPlay = { type = "exec", exec = { prog = "bash", args = ["-c", 'if playerctl -a status 2>/dev/null | grep -q Playing; then playerctl -a pause; else playerctl -a play; fi'] } }
+XF86AudioPause = { type = "exec", exec = { prog = "bash", args = ["-c", 'if playerctl -a status 2>/dev/null | grep -q Playing; then playerctl -a pause; else playerctl -a play; fi'] } }
+XF86AudioNext = { type = "exec", exec = ["playerctl", "next"] }
+
+#EasyEffects Toggle
+logo-shift-e = { type = "exec", exec = "/home/tobyn/.local/bin/toggle-easyeffects" }
+
+##Capabilities: Jay grants screencopy/data-control only via verbatim /proc/pid/exe paths
+# NOTE: store hashes below are desktop-specific. After first `nixos-rebuild`
+# on the laptop, find the real paths with:
+#   ls -d /nix/store/*grim-*/bin/grim /nix/store/*wl-clipboard-*/bin/wl-{copy,paste}
+# and update the match.exe lines accordingly.
+#[[clients]]
+#name = "grim-screencopy"
+#match.exe = "/nix/store/j46b9y2gj3dyw2mma1hl2wcbz3b6llws-grim-1.5.0/bin/grim"
+#capabilities = "screencopy"
+#
+#[[clients]]
+#name = "wl-paste-data-control"
+#match.exe = "/nix/store/5biz40pc9n1r463bqnky55vjp42bxg76-wl-clipboard-2.3.0/bin/wl-paste"
+#capabilities = "data-control"
+#
+#[[clients]]
+#name = "wl-copy-data-control"
+#match.exe = "/nix/store/5biz40pc9n1r463bqnky55vjp42bxg76-wl-clipboard-2.3.0/bin/wl-copy"
+#capabilities = "data-control"
+
+##Window Rules
+[[windows]]
+name = "foot"
+match.app-id = "foot"
+initial-tile-state = "floating"
+
+[[windows]]
+name = "btop"
+match.app-id = "btop"
+action = "float"
+
+#Initial workspace
+[workspaces."1"]
+initial-output.name = "internal"
+[workspaces."2"]
+initial-output.name = "internal"
+
+#Brightness
+[complex-shortcuts]
+logo-F5 = { action = { type = "exec", exec = ["/home/tobyn/.local/bin/brightness", "down"] }, repeat = true }
+logo-F6 = { action = { type = "exec", exec = ["/home/tobyn/.local/bin/brightness", "up"] }, repeat = true }

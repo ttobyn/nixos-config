@@ -16,4 +16,8 @@
   # laptop i3status bar: no nvidia_gpu block, battery block after RAM
   home-manager.users.tobyn.home.file.".config/i3status-rust".source =
     lib.mkForce ../../dotfiles/i3status-rust-laptop;
+
+  # laptop jay config: single 144Hz internal display, no nvidia bits
+  home-manager.users.tobyn.home.file.".config/jay".source =
+    lib.mkForce ../../dotfiles/jay-laptop;
 }
