@@ -1,21 +1,23 @@
-{ pkgs, ... }:
-
+{ pkgs, lib, ... }:
+let
+  myPkgs = import ../../packages.nix { inherit pkgs; };
+in
 {
   security.rtkit.enable = true;
+
+  services.jellyfin.enable = true;
+  networking.firewall.allowedTCPPorts = [ 8096 ];
+  users.users.jellyfin.extraGroups = [ "video" "render" ];
+  systemd.services.jellyfin.wantedBy = lib.mkForce [];
 
   services.pipewire = {
     enable = true;
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
-    # jack.enable = true; # uncomment if you run JACK apps
   };
 
-  environment.systemPackages = with pkgs; [
-    easyeffects
-    qpwgraph
-    playerctl
-  ];
+  environment.systemPackages = myPkgs.media;
 
   hardware.bluetooth = {
     enable = true;

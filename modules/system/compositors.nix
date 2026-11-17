@@ -1,6 +1,7 @@
 { pkgs, ... }:
 
 let
+  myPkgs = import ../../packages.nix { inherit pkgs; };
   jaySession = pkgs.writeTextFile {
     name = "jay-wayland-session";
     destination = "/share/wayland-sessions/jay.desktop";
@@ -15,11 +16,13 @@ let
   };
 in
 {
+  services.displayManager.ly.enable = true;
+
   # Hyprland's module used to auto-enable xdg.portal, which Flatpak
   # asserts on — keep portals explicitly for file choosers et al.
   xdg.portal = {
     enable = true;
-    extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
+    extraPortals = myPkgs.portals;
     config.common.default = "*";
   };
 
@@ -28,6 +31,6 @@ in
   };
 
   #Jay
-  environment.systemPackages = [ pkgs.jay pkgs.xwayland ];
+  environment.systemPackages = myPkgs.compositors;
   services.displayManager.sessionPackages = [ jaySession ];
 }

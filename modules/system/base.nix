@@ -1,8 +1,11 @@
 { pkgs, ... }:
-
+let
+  myPkgs = import ../../packages.nix { inherit pkgs; };
+in
 {
   boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-latest;
   programs.zsh.enable = true;
+  programs.appimage.enable = true;
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -47,9 +50,7 @@
     isNormalUser = true;
     extraGroups = [ "networkmanager" "wheel" "gamemode" ];
     shell = pkgs.zsh;
-    packages = with pkgs; [
-      tree
-    ];
+    packages = myPkgs.userTobyn;
   };
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];

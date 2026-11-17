@@ -36,6 +36,7 @@ on-graphics-initialized = [
 
 { type = "exec", exec = "thunar --daemon" },
 
+{ type = "exec", exec = { prog = "cliphist", args = ["wipe"], env.WAYLAND_DISPLAY = "wayland-1.jay" } },
 { type = "exec", exec = { prog = "wl-paste", args = ["--type", "text", "--watch", "cliphist", "store"], env.WAYLAND_DISPLAY = "wayland-1.jay" } },
 { type = "exec", exec = { prog = "wl-paste", args = ["--type", "image", "--watch", "cliphist", "store"], env.WAYLAND_DISPLAY = "wayland-1.jay" } },
 
@@ -70,6 +71,7 @@ name = "nvidia"
 match.pci-vendor = 0x10de
 match.pci-model = 0x2489
 gfx-api = "Vulkan"
+flip-margin-ms = 1.0
 
 [[outputs]]
 name = "left"
@@ -92,12 +94,13 @@ tearing.mode = "variant1"
 vrr.mode = "always"
 
 [theme]
-border-width = 1
-border-color = "#ffffff"
-separator-color = "#ffffff"
+container-borders = "full"
+border-width = 5
+border-color = "#00000000"
+separator-color = "#00000000"
 highlight-color = "#AAA7AD"
 focused-title-bg-color = "#AAA7AD"
-unfocused-title-bg-color = "#000000"
+unfocused-title-bg-color = "#00000000"
 
 bar-separator-width = 0
 

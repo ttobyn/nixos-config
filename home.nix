@@ -1,6 +1,8 @@
 { pkgs, ... }:
 
 let
+  myPkgs = import ./packages.nix { inherit pkgs; };
+  papirus-white = pkgs.papirus-icon-theme.override { color = "white"; };
   gtkCss = ''
     @define-color window_bg_color #000000;
     @define-color window_fg_color #ffffff;
@@ -59,8 +61,7 @@ in
     ./modules/user/spotify.nix
   ];
 
-  home.pointerCursor = {
-    enable = true;
+  home.pointerCursor = {    enable = true;
     gtk.enable = true;
 
     name = "Adwaita";
@@ -74,6 +75,14 @@ in
 
   programs.git.enable = true;
 
+  programs.obs-studio = {
+    enable = true;
+    package = pkgs.obs-studio.override {
+      cudaSupport = true;
+    };
+    plugins = [ pkgs.obs-studio-plugins.obs-pipewire-audio-capture ];
+  };
+
   programs.zsh = {
     enable = true;
     enableCompletion = false;
@@ -82,11 +91,12 @@ in
     shellAliases = {
       rebuild = "sudo nixos-rebuild switch --flake /etc/nixos#nixos --show-trace -L";
       update = "cd /etc/nixos && sudo nix flake update && sudo nixos-rebuild switch --flake";
+      rbt = "systemctl soft-reboot";
       vpn-uk = "sudo systemctl start wg-quick-surfshark-uk";
       vpn-nl = "sudo systemctl start wg-quick-surfshark-nl";
       vpn-us = "sudo systemctl start wg-quick-surfshark-us";
       vpn-off = "sudo systemctl stop wg-quick-surfshark-uk wg-quick-surfshark-nl wg-quick-surfshark-us";
-      ssh-pi = "TERM=xterm-256color ssh root@192.168.50.149";
+      ssh-pi = "TERM=xterm-256color ssh root@192.168.1.29";
     };
     initContent = ''
       # cached compinit: full scan walks the whole nix store (~700ms),
@@ -106,10 +116,7 @@ in
     '';
   };
 
-  home.packages = with pkgs; [
-    rofi
-    starship
-  ];
+  home.packages = myPkgs.home;
   gtk = {
     enable = true;
     theme = {
@@ -118,7 +125,7 @@ in
     };
     iconTheme = {
       name = "Papirus-Dark";
-      package = pkgs.papirus-icon-theme.override { color = "white"; };
+      package = papirus-white;
     };
     gtk3.extraCss = gtkCss;
     gtk4.extraCss = gtkCss;
@@ -131,7 +138,7 @@ in
   home.file.".config/starship.toml".source = ./dotfiles/starship/config.toml;
   home.file.".local/share/fonts".source = ./dotfiles/fonts;
   home.file.".icons/Papirus-Dark".source =
-    "${pkgs.papirus-icon-theme.override { color = "white"; }}/share/icons/Papirus-Dark";
+    "${papirus-white}/share/icons/Papirus-Dark";
   home.file.".local/share/wallpapers".source = ./assets/wallpapers;
   home.file.".config/easyeffects".source = ./dotfiles/easyeffects;
   home.file.".config/swappy".source = ./dotfiles/swappy; 

@@ -1,4 +1,7 @@
 { pkgs, ... }:
+let
+  myPkgs = import ../../packages.nix { inherit pkgs; };
+in
 {
  #native
   powerManagement.cpuFreqGovernor = "performance";
@@ -9,40 +12,23 @@
     remotePlay.openFirewall = true;
     localNetworkGameTransfers.openFirewall = true;
     protontricks.enable = true;
-    extraCompatPackages = with pkgs; [
-      proton-ge-bin
-    ];
+    extraCompatPackages = myPkgs.steamCompat;
   };
   boot.kernelModules = [ "ntsync" ];
   programs.gamemode.enable = true;
   programs.gamescope.enable = true;
+  services.scx = {
+    enable = true;
+    scheduler = "scx_bpfland";
+  };
+  systemd.services.scx.serviceConfig.LimitMEMLOCK = "infinity";
   environment.etc."libinput/local-overrides.quirks".text = ''
     [Never Debounce]
     MatchUdevType=mouse
     ModelBouncingKeys=1
   '';
   environment.sessionVariables.PROTON_ENABLE_NVAPI = "1";
-  environment.systemPackages = with pkgs; [
-    (prismlauncher.override { jdks = [ pkgs.jdk17 ]; })
-    waywall
-    vulkan-tools
-    winetricks
-    pkgs.glfw3-minecraft
-    heroic
-    bedrock-on-linux
-    mangohud
-  ];
+  environment.systemPackages = myPkgs.gaming;
+  boot.kernel.sysctl."vm.swappiness" = 1;
 
-  #flatpak
-  systemd.services.flatpak-sober = {
-    wantedBy = [ "multi-user.target" ];
-    path = [ pkgs.flatpak ];
-    script = ''
-      flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-      if ! flatpak info org.vinegarhq.Sober >/dev/null 2>&1; then
-        flatpak install --system -y --noninteractive flathub org.vinegarhq.Sober
-      fi
-    '';
-    serviceConfig.Type = "oneshot";
-  };
 }
